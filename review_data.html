@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Farmer Data</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <aside>
+            <header>
+                <h1>Crop Analysis</h1>
+            </header>
+            <nav>
+                <ul>
+                    <li>
+                        <a href="#">History</a>
+                        <ul>
+                            <li><a href="yield_data.html">Yield Data</a></li>
+                            <li><a href="acreage_data.html">Acreage Data</a></li>
+                            <li><a href="cost_data.html">Cost Data</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" class="active">Farmer Option</a>
+                        <ul>
+                            <li><a href="farmer_consultation.html">Consultation</a></li>
+                            <li><a href="review_data.html" class="active">Review Crop Data</a></li>
+                            <li><a href="aid_request.html">Aid Request</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="charts_forecast.html">Charts, Forecast & Analysis</a></li>
+                    <li class="logout"><a href="logout.html">Log Out</a></li>
+                </ul>
+            </nav>
+            <footer>
+                <p>&copy; 2025</p>
+            </footer>
+        </aside>
+        <main>
+            <section id="review-farmer-data">
+                <h2>Review Farmer Provided Data</h2>
+                <p>This page will display the crop data submitted by farmers for review.</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Farmer ID</th>
+                            <th>Production Cost</th>
+                            <th>Acreage</th>
+                            <th>Yield</th>
+                            <th>Variety</th>
+                            <th>Seasonality</th>
+                            <th>Type</th>
+                            </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>FARM001</td>
+                            <td>15000</td>
+                            <td>5</td>
+                            <td>3.5 tonnes</td>
+                            <td>Local Variety</td>
+                            <td>Kharif</td>
+                            <td>Rice</td>
+                        </tr>
+                        </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
