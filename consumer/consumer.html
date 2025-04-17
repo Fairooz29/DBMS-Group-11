@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Consumer Demand Data</title>
+  <link rel="stylesheet" href="consumer.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+      <h2>AgriTrack</h2>
+      <ul>
+        <li><a href="?page=dashboard">Dashboard</a></li>
+        <li><a href="?page=products">Products</a></li>
+        <li><a href="?page=demands">Demand</a></li>
+        <li><a href="?page=analytics">Analytics</a></li>
+        <li><a href="?page=market">Market Prices</a></li>
+        <li><a href="?page=profile">Profile</a></li>
+        <li><a href="?page=logout">Logout</a></li>
+      </ul>
+    </nav>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+      <h1>Product vs Consumption Rate</h1>
+      <canvas id="consumptionChart"></canvas>
+
+      <div class="form-group">
+        <select id="productId">
+          <option value="101">101</option>
+          <option value="107">107</option>
+          <option value="108">108</option>
+          <option value="109">109</option>
+          <option value="110">110</option>
+        </select>
+        <select id="rate">
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+        </select>
+        <button onclick="addData()">Add Data</button>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Product ID</th>
+            <th>Consumption Rate</th>
+            <th>Demand</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="dataTable">
+          <tr><td>101</td><td>Low</td><td>0.5</td><td><button class="btn edit">Edit</button><button class="btn delete">Delete</button></td></tr>
+          <tr><td>107</td><td>High</td><td>3</td><td><button class="btn edit">Edit</button><button class="btn delete">Delete</button></td></tr>
+          <tr><td>108</td><td>Medium</td><td>2</td><td><button class="btn edit">Edit</button><button class="btn delete">Delete</button></td></tr>
+          <tr><td>109</td><td>Low</td><td>1</td><td><button class="btn edit">Edit</button><button class="btn delete">Delete</button></td></tr>
+          <tr><td>110</td><td>Medium</td><td>2</td><td><button class="btn edit">Edit</button><button class="btn delete">Delete</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const chartCtx = document.getElementById("consumptionChart").getContext("2d");
+    const chart = new Chart(chartCtx, {
+      type: "bar",
+      data: {
+        labels: ["101", "107", "108", "109", "110"],
+        datasets: [{
+          label: "Demand (Consumption Rate)",
+          data: [0.5, 3, 2, 1, 2],
+          backgroundColor: ["#FF6B6B", "#4D96FF", "#33CC99", "#FFA500", "#33CC99"]
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: { display: true, text: 'Demand Value' }
+          },
+          x: {
+            title: { display: true, text: 'Product ID' }
+          }
+        }
+      }
+    });
+
+    function addData() {
+      const product = document.getElementById("productId").value;
+      const rate = document.getElementById("rate").value;
+
+      let demandValue = 1;
+      if (rate === "High") demandValue = 3;
+      else if (rate === "Medium") demandValue = 2;
+      else if (rate === "Low") demandValue = 0.5;
+
+      chart.data.labels.push(product);
+      chart.data.datasets[0].data.push(demandValue);
+      chart.update();
+
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${product}</td>
+        <td>${rate}</td>
+        <td>${demandValue}</td>
+        <td>
+          <button class="btn edit">Edit</button>
+          <button class="btn delete">Delete</button>
+        </td>`;
+      document.getElementById("dataTable").appendChild(row);
+    }
+  </script>
+</body>
+</html>
