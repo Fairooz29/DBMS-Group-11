@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Dashboard | Supply & Demand</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --vendor-blue: #2196F3;
+            --light-blue: #E3F2FD;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+        }
+        .sidebar {
+            background-color: var(--vendor-blue);
+            color: white;
+            height: 100vh;
+            position: fixed;
+        }
+        .sidebar .nav-link {
+            color: white;
+            margin-bottom: 5px;
+        }
+        .sidebar .nav-link:hover {
+            background-color: #1976D2;
+        }
+        .sidebar .nav-link.active {
+            background-color: #1976D2;
+            font-weight: bold;
+        }
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            border: none;
+        }
+        .card-header {
+            background-color: var(--vendor-blue);
+            color: white;
+            border-radius: 10px 10px 0 0 !important;
+        }
+        .btn-primary {
+            background-color: var(--vendor-blue);
+            border-color: var(--vendor-blue);
+        }
+        .stat-card {
+            background-color: white;
+            border-left: 5px solid var(--vendor-blue);
+        }
+        .revenue { color: #4CAF50; font-weight: bold; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 d-md-block sidebar collapse">
+                <div class="text-center py-4">
+                    <h4>Vendor Dashboard</h4>
+                </div>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active dashboard-link" href="#">
+                            <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link orders-link" href="#">
+                            <i class="fas fa-shopping-cart me-2"></i>My Orders
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link inventory-link" href="#">
+                            <i class="fas fa-warehouse me-2"></i>Inventory
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link farmers-link" href="#">
+                            <i class="fas fa-user-tie me-2"></i>Farmers
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link profile-link" href="#">
+                            <i class="fas fa-user me-2"></i>Profile
+                        </a>
+                    </li>
+                    <li class="nav-item mt-3">
+                        <a class="nav-link text-warning logout-link" href="#">
+                            <i class="fas fa-sign-out-alt me-2"></i>Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Main Content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content" id="mainContent">
+                <!-- Dashboard Content -->
+                <div class="dashboard-content">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <h1 class="h2">Vendor Overview</h1>
+                        <button type="button" class="btn btn-primary" id="newOrderBtn">
+                            <i class="fas fa-plus me-1"></i> New Order
+                        </button>
+                    </div>
+
+                    <!-- Stats Cards -->
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="card stat-card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Active Orders</h5>
+                                    <h2 class="card-text" id="activeOrders">0</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card stat-card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Pending Orders</h5>
+                                    <h2 class="card-text" id="pendingOrders">0</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card stat-card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Total Revenue</h5>
+                                    <h2 class="card-text"><span class="revenue" id="totalRevenue">৳0</span></h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card stat-card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Farmers</h5>
+                                    <h2 class="card-text" id="totalFarmers">0</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Orders -->
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-shopping-cart me-2"></i>Recent Orders</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Order ID</th>
+                                            <th>Farmer</th>
+                                            <th>Crop</th>
+                                            <th>Quantity</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="ordersTableBody">
+                                        <!-- Filled by JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Orders Content (Hidden) -->
+                <div class="orders-content" style="display: none;">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <h1 class="h2">All Orders</h1>
+                        <button class="btn btn-primary" id="createNewOrderBtn">
+                            <i class="fas fa-plus me-1"></i> Create Order
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Date</th>
+                                    <th>Farmer</th>
+                                    <th>Crop</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="allOrdersTableBody">
+                                <!-- Filled by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Inventory Content (Hidden) -->
+                <div class="inventory-content" style="display: none;">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <h1 class="h2">Current Inventory</h1>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Harvest ID</th>
+                                    <th>Crop</th>
+                                    <th>Variety</th>
+                                    <th>Quantity</th>
+                                    <th>Warehouse</th>
+                                    <th>Harvest Date</th>
+                                </tr>
+                            </thead>
+                            <tbody id="inventoryTableBody">
+                                <!-- Filled by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Farmers Content (Hidden) -->
+                <div class="farmers-content" style="display: none;">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <h1 class="h2">Farmers Network</h1>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Farmer ID</th>
+                                    <th>Name</th>
+                                    <th>Location</th>
+                                    <th>Contact</th>
+                                    <th>Active Harvests</th>
+                                </tr>
+                            </thead>
+                            <tbody id="farmersTableBody">
+                                <!-- Filled by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Profile Content (Hidden) -->
+                <div class="profile-content" style="display: none;">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <h1 class="h2">Vendor Profile</h1>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <form id="vendorProfileForm">
+                                <div class="mb-3">
+                                    <label class="form-label">Vendor Name</label>
+                                    <input type="text" class="form-control" id="vendorName" value="Agro Trade Ltd.">
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Thana</label>
+                                        <input type="text" class="form-control" id="vendorThana" value="Kaliakair">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">City</label>
+                                        <input type="text" class="form-control" id="vendorCity" value="Gazipur">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">ZIP Code</label>
+                                        <input type="text" class="form-control" id="vendorZip" value="1750">
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Contact Numbers</label>
+                                    <div id="contactNumbers">
+                                        <div class="input-group mb-2">
+                                            <input type="tel" class="form-control" value="01712345678">
+                                            <button class="btn btn-outline-danger" type="button">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                        <button class="btn btn-sm btn-outline-primary" type="button" id="addContactBtn">
+                                            <i class="fas fa-plus"></i> Add Number
+                                        </button>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Order Modal -->
+    <div class="modal fade" id="orderModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create New Order</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="orderForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Select Farmer*</label>
+                                <select class="form-select" id="orderFarmer" required>
+                                    <option value="">Choose Farmer</option>
+                                    <option value="F-1001">Abdul Rahman (Kaliakair)</option>
+                                    <option value="F-1002">Mohammad Ali (Gazipur)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Select Harvest*</label>
+                                <select class="form-select" id="orderHarvest" required>
+                                    <option value="">Choose Harvest</option>
+                                    <option value="HV-2023-001">Rice - BRRI-28 (2.5 acres)</option>
+                                    <option value="HV-2023-002">Potato - Diamant (3.0 acres)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Quantity (kg)*</label>
+                                <input type="number" class="form-control" id="orderQuantity" required>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Price per kg (৳)*</label>
+                                <input type="number" class="form-control" id="orderPrice" required>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Delivery Date*</label>
+                                <input type="date" class="form-control" id="orderDate" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Special Instructions</label>
+                            <textarea class="form-control" id="orderNotes" rows="2"></textarea>
+                        </div>
+                        <div class="alert alert-danger hidden" id="orderError"></div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveOrderBtn">Place Order</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Initialize data with localStorage persistence
+        let vendorData = JSON.parse(localStorage.getItem('vendorData')) || {
+            name: "Agro Trade Ltd.",
+            thana: "Kaliakair",
+            city: "Gazipur",
+            zip: "1750",
+            contacts: ["01712345678", "01987654321"]
+        };
+
+        let farmerData = JSON.parse(localStorage.getItem('farmerData')) || [
+            { id: "F-1001", name: "Abdul Rahman", thana: "Kaliakair", city: "Gazipur", contact: "01711111111", harvests: 3 },
+            { id: "F-1002", name: "Mohammad Ali", thana: "Gazipur", city: "Gazipur", contact: "01722222222", harvests: 2 }
+        ];
+
+        let harvestData = JSON.parse(localStorage.getItem('harvestData')) || [
+            { id: "HV-2023-001", crop: "Rice", variety: "BRRI-28", quantity: 3200, warehouse: "WH-001", date: "2023-11-15" },
+            { id: "HV-2023-002", crop: "Potato", variety: "Diamant", quantity: 8500, warehouse: "WH-002", date: "2023-12-20" }
+        ];
+
+        let orderData = JSON.parse(localStorage.getItem('vendorOrders')) || [
+            { id: "ORD-2023-105", farmerId: "F-1001", farmer: "Abdul Rahman", crop: "Rice", quantity: 2000, price: 25, status: "Completed", date: "2023-11-18" },
+            { id: "ORD-2023-106", farmerId: "F-1002", farmer: "Mohammad Ali", crop: "Potato", quantity: 1500, price: 15, status: "Shipped", date: "2023-12-10" },
+            { id: "ORD-2023-107", farmerId: "F-1001", farmer: "Abdul Rahman", crop: "Rice", quantity: 1000, price: 28, status: "Pending", date: "2024-01-05" }
+        ];
+
+        // DOM Elements
+        const orderModal = new bootstrap.Modal(document.getElementById('orderModal'));
+        const orderError = document.getElementById('orderError');
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadDashboard();
+            setupEventListeners();
+            // Set default order date to today + 7 days
+            const nextWeek = new Date();
+            nextWeek.setDate(nextWeek.getDate() + 7);
+            document.getElementById('orderDate').valueAsDate = nextWeek;
+        });
+
+        // Load data into tables
+        function loadDashboard() {
+            // Refresh data from localStorage
+            orderData = JSON.parse(localStorage.getItem('vendorOrders')) || orderData;
+            farmerData = JSON.parse(localStorage.getItem('farmerData')) || farmerData;
+            harvestData = JSON.parse(localStorage.getItem('harvestData')) || harvestData;
+            
+            // Load recent orders (show 3 most recent)
+            const ordersTableBody = document.getElementById('ordersTableBody');
+            ordersTableBody.innerHTML = orderData.slice(0, 3).map(order => `
+                <tr>
+                    <td>${order.id}</td>
+                    <td>${order.farmer}</td>
+                    <td>${order.crop}</td>
+                    <td>${order.quantity} kg</td>
+                    <td><span class="badge ${getOrderStatusClass(order.status)}">${order.status}</span></td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary view-order-btn" data-id="${order.id}">View</button>
+                        <button class="btn btn-sm btn-outline-success complete-order-btn" data-id="${order.id}" ${order.status === 'Completed' ? 'disabled' : ''}>
+                            ${order.status === 'Completed' ? 'Completed' : 'Mark Complete'}
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+
+            // Load all orders
+            const allOrdersTableBody = document.getElementById('allOrdersTableBody');
+            allOrdersTableBody.innerHTML = orderData.map(order => `
+                <tr>
+                    <td>${order.id}</td>
+                    <td>${new Date(order.date).toLocaleDateString()}</td>
+                    <td>${order.farmer}</td>
+                    <td>${order.crop}</td>
+                    <td>${order.quantity} kg</td>
+                    <td>৳${order.price}/kg</td>
+                    <td><span class="badge ${getOrderStatusClass(order.status)}">${order.status}</span></td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary view-order-btn" data-id="${order.id}">View</button>
+                        <button class="btn btn-sm btn-outline-success complete-order-btn" data-id="${order.id}" ${order.status === 'Completed' ? 'disabled' : ''}>
+                            ${order.status === 'Completed' ? 'Completed' : 'Mark Complete'}
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+
+            // Load inventory
+            const inventoryTableBody = document.getElementById('inventoryTableBody');
+            inventoryTableBody.innerHTML = harvestData.map(harvest => `
+                <tr>
+                    <td>${harvest.id}</td>
+                    <td>${harvest.crop}</td>
+                    <td>${harvest.variety}</td>
+                    <td>${harvest.quantity} kg</td>
+                    <td>${harvest.warehouse}</td>
+                    <td>${new Date(harvest.date).toLocaleDateString()}</td>
+                </tr>
+            `).join('');
+
+            // Load farmers
+            const farmersTableBody = document.getElementById('farmersTableBody');
+            farmersTableBody.innerHTML = farmerData.map(farmer => `
+                <tr>
+                    <td>${farmer.id}</td>
+                    <td>${farmer.name}</td>
+                    <td>${farmer.thana}, ${farmer.city}</td>
+                    <td>${farmer.contact}</td>
+                    <td>${farmer.harvests}</td>
+                </tr>
+            `).join('');
+
+            // Update stats
+            document.getElementById('activeOrders').textContent = orderData.length;
+            document.getElementById('pendingOrders').textContent = orderData.filter(o => o.status === "Pending").length;
+            
+            const totalRevenue = orderData
+                .filter(o => o.status === "Completed")
+                .reduce((sum, order) => sum + (order.quantity * order.price), 0);
+            document.getElementById('totalRevenue').textContent = `৳${totalRevenue.toLocaleString()}`;
+            
+            document.getElementById('totalFarmers').textContent = farmerData.length;
+            
+            // Load vendor profile
+            document.getElementById('vendorName').value = vendorData.name;
+            document.getElementById('vendorThana').value = vendorData.thana;
+            document.getElementById('vendorCity').value = vendorData.city;
+            document.getElementById('vendorZip').value = vendorData.zip;
+            
+            // Load contact numbers
+            const contactNumbersDiv = document.getElementById('contactNumbers');
+            contactNumbersDiv.innerHTML = '';
+            vendorData.contacts.forEach(contact => {
+                const contactDiv = document.createElement('div');
+                contactDiv.className = 'input-group mb-2';
+                contactDiv.innerHTML = `
+                    <input type="tel" class="form-control" value="${contact}">
+                    <button class="btn btn-outline-danger remove-contact" type="button">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                contactNumbersDiv.appendChild(contactDiv);
+            });
+            const addButton = document.createElement('button');
+            addButton.className = 'btn btn-sm btn-outline-primary';
+            addButton.type = 'button';
+            addButton.id = 'addContactBtn';
+            addButton.innerHTML = '<i class="fas fa-plus"></i> Add Number';
+            contactNumbersDiv.appendChild(addButton);
+            
+            // Reattach event listeners
+            attachEventListeners();
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Navigation
+            document.querySelector('.dashboard-link').addEventListener('click', () => showSection('dashboard'));
+            document.querySelector('.orders-link').addEventListener('click', () => showSection('orders'));
+            document.querySelector('.inventory-link').addEventListener('click', () => showSection('inventory'));
+            document.querySelector('.farmers-link').addEventListener('click', () => showSection('farmers'));
+            document.querySelector('.profile-link').addEventListener('click', () => showSection('profile'));
+            
+            // Buttons
+            document.getElementById('newOrderBtn').addEventListener('click', () => orderModal.show());
+            document.getElementById('createNewOrderBtn').addEventListener('click', () => orderModal.show());
+            
+            // Save order
+            document.getElementById('saveOrderBtn').addEventListener('click', saveOrder);
+            
+            // Profile form
+            document.getElementById('vendorProfileForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveVendorProfile();
+            });
+            
+            // Add contact number
+            document.addEventListener('click', function(e) {
+                if (e.target && e.target.id === 'addContactBtn') {
+                    const contactDiv = document.createElement('div');
+                    contactDiv.className = 'input-group mb-2';
+                    contactDiv.innerHTML = `
+                        <input type="tel" class="form-control" placeholder="New contact number">
+                        <button class="btn btn-outline-danger remove-contact" type="button">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    `;
+                    e.target.parentNode.insertBefore(contactDiv, e.target);
+                }
+                
+                if (e.target && e.target.classList.contains('remove-contact')) {
+                    e.target.closest('.input-group').remove();
+                }
+            });
+        }
+
+        // Attach dynamic event listeners
+        function attachEventListeners() {
+            // View order buttons
+            document.querySelectorAll('.view-order-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const orderId = this.getAttribute('data-id');
+                    const order = orderData.find(o => o.id === orderId);
+                    alert(`Order Details:\n\nID: ${order.id}\nFarmer: ${order.farmer}\nCrop: ${order.crop}\nQuantity: ${order.quantity} kg\nPrice: ৳${order.price}/kg\nStatus: ${order.status}\nDate: ${new Date(order.date).toLocaleDateString()}`);
+                });
+            });
+            
+            // Complete order buttons
+            document.querySelectorAll('.complete-order-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const orderId = this.getAttribute('data-id');
+                    const orderIndex = orderData.findIndex(o => o.id === orderId);
+                    
+                    if (orderIndex !== -1) {
+                        orderData[orderIndex].status = "Completed";
+                        localStorage.setItem('vendorOrders', JSON.stringify(orderData));
+                        loadDashboard();
+                        alert(`Order #${orderId} marked as completed!`);
+                    }
+                });
+            });
+        }
+
+        // Save order function
+        function saveOrder() {
+            // Get form values
+            const farmerSelect = document.getElementById('orderFarmer');
+            const farmerId = farmerSelect.value;
+            const farmerName = farmerSelect.options[farmerSelect.selectedIndex].text.split(' (')[0];
+            
+            const harvestSelect = document.getElementById('orderHarvest');
+            const harvestId = harvestSelect.value;
+            const crop = harvestSelect.options[harvestSelect.selectedIndex].text.split(' - ')[0];
+            
+            const quantity = document.getElementById('orderQuantity').value;
+            const price = document.getElementById('orderPrice').value;
+            const date = document.getElementById('orderDate').value;
+            const notes = document.getElementById('orderNotes').value;
+
+            // Validate
+            if (!farmerId || !harvestId || !quantity || !price || !date) {
+                orderError.textContent = "Please fill all required fields (*)";
+                orderError.classList.remove('hidden');
+                return;
+            }
+            
+            // Create new order
+            const newOrder = {
+                id: "ORD-" + new Date().getTime(),
+                farmerId: farmerId,
+                farmer: farmerName,
+                crop: crop,
+                quantity: parseInt(quantity),
+                price: parseInt(price),
+                status: "Pending",
+                date: date,
+                notes: notes
+            };
+            
+            // Add to orders array
+            orderData.unshift(newOrder);
+            localStorage.setItem('vendorOrders', JSON.stringify(orderData));
+            
+            // Close modal and reset form
+            orderModal.hide();
+            document.getElementById('orderForm').reset();
+            orderError.classList.add('hidden');
+            
+            // Reload dashboard to show new order
+            loadDashboard();
+            
+            alert(`Order #${newOrder.id} placed successfully!`);
+        }
+
+        // Save vendor profile
+        function saveVendorProfile() {
+            // Get form values
+            vendorData = {
+                name: document.getElementById('vendorName').value,
+                thana: document.getElementById('vendorThana').value,
+                city: document.getElementById('vendorCity').value,
+                zip: document.getElementById('vendorZip').value,
+                contacts: Array.from(document.querySelectorAll('#contactNumbers input[type="tel"]')).map(input => input.value)
+            };
+            
+            localStorage.setItem('vendorData', JSON.stringify(vendorData));
+            alert('Profile updated successfully!');
+        }
+
+        // Helper functions
+        function showSection(section) {
+            document.querySelectorAll('.dashboard-content, .orders-content, .inventory-content, .farmers-content, .profile-content')
+                .forEach(el => el.style.display = 'none');
+            document.querySelector(`.${section}-content`).style.display = 'block';
+            
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+            document.querySelector(`.${section}-link`).classList.add('active');
+        }
+
+        function getOrderStatusClass(status) {
+            switch(status) {
+                case 'Completed': return 'bg-success';
+                case 'Shipped': return 'bg-primary';
+                case 'Pending': return 'bg-warning text-dark';
+                default: return 'bg-secondary';
+            }
+        }
+    </script>
+</body>
+</html>
