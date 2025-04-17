@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Consultation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <aside>
+            <header>
+                <h1>Crop Analysis</h1>
+            </header>
+            <nav>
+                <ul>
+                    <li>
+                        <a href="#">History</a>
+                        <ul>
+                            <li><a href="yield_data.html">Yield Data</a></li>
+                            <li><a href="acreage_data.html">Acreage Data</a></li>
+                            <li><a href="cost_data.html">Cost Data</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" class="active">Farmer Option</a>
+                        <ul>
+                            <li><a href="farmer_consultation.html" class="active">Consultation</a></li>
+                            <li><a href="review_data.html">Review Crop Data</a></li>
+                            <li><a href="aid_request.html">Aid Request</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="charts_forecast.html">Charts, Forecast & Analysis</a></li>
+                    <li class="logout"><a href="logout.html">Log Out</a></li>
+                </ul>
+            </nav>
+            <footer>
+                <p>&copy; 2025</p>
+            </footer>
+        </aside>
+        <main>
+            <section id="farmer-consultation">
+                <h2>Farmer Consultation Form</h2>
+                <form>
+                    <div>
+                        <label for="production_cost">Estimated Production Cost:</label>
+                        <input type="number" id="production_cost" name="production_cost">
+                    </div>
+                    <div>
+                        <label for="acreage">Acreage:</label>
+                        <input type="number" id="acreage" name="acreage">
+                    </div>
+                    <div>
+                        <label for="yield">Estimated Yield:</label>
+                        <input type="text" id="yield" name="yield">
+                    </div>
+                    <div>
+                        <label for="variety">Crop Variety:</label>
+                        <input type="text" id="variety" name="variety">
+                    </div>
+                    <div>
+                        <label for="seasonality">Seasonality:</label>
+                        <input type="text" id="seasonality" name="seasonality">
+                    </div>
+                    <div>
+                        <label for="type">Crop Type:</label>
+                        <input type="text" id="type" name="type">
+                    </div>
+                    <div>
+                        <label for="selling_price">Expected Selling Price:</label>
+                        <input type="number" id="selling_price" name="selling_price">
+                    </div>
+                    <div>
+                        <label for="sales_quantity">Estimated Sales Quantity:</label>
+                        <input type="number" id="sales_quantity" name="sales_quantity">
+                    </div>
+                    <button type="submit">Submit for Consultation</button>
+                </form>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
