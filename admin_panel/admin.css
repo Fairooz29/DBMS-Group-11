@@ -10,9 +10,10 @@ body {
   min-height: 100vh;
 }
 
+/* Sidebar */
 .sidebar {
   width: 220px;
-  background-color: #2e7d32;
+  background-color: #0077b6;
   color: white;
   padding: 1rem 0;
   min-height: 100vh;
@@ -40,9 +41,10 @@ body {
 }
 
 .sidebar ul li a:hover {
-  background-color: #66bb6a;
+  background-color: #3f746d;
 }
 
+/* Main Content */
 .main-content {
   flex: 1;
   padding: 2rem;
@@ -50,4 +52,63 @@ body {
   margin: 2rem;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Top Navigation */
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #ccc;
+}
+
+.top-nav input[type="text"] {
+  padding: 8px;
+  width: 40%;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.top-actions span {
+  margin-left: 20px;
+  font-weight: bold;
+}
+
+/* Chart Section */
+.chart-section {
+  margin-bottom: 2rem;
+}
+
+.chart-img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+}
+
+/* Product List */
+.product-list h3 {
+  margin-bottom: 1rem;
+}
+
+.add-btn {
+  background-color: #ef5350;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
 }

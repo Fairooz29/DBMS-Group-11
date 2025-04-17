@@ -6,8 +6,7 @@
   }
   body {
     font-family: 'Segoe UI', sans-serif;
-    background-color: #f4f7fa;
-    color: #e0f0ff;
+    background-color: #f4f7fa;;
   }
   
   /* Top Header (Navbar) */
@@ -101,7 +100,7 @@
       padding: 60px 0;
 }
 .feature_txt h2{
-    color: #415a77;
+    color: #415a77 !important;
 }
 .feature-box {
       background: linear-gradient(to right, #415a77, #1b263b);
@@ -113,7 +112,7 @@
 }
 .feature-box:hover {
       transform: translateY(-5px);
-      background: #1e2a38;
+      background: #45668b;
 }
 .feature-box i {
       color: #e0f0ff;
@@ -139,7 +138,7 @@
       transition: 0.3s ease;
 }
 .features-section .btn:hover {
-      background-color: #2c3e50;
+      background-color: #45668b;
 }
     
     /* Contact Form Section */
@@ -211,12 +210,12 @@
       cursor: pointer;
     }
     .button input:hover {
-      background-color: #2c3e50;
+      background-color: #45668b;
     }
     
     /* Footer */
     footer {
-      background-color: #1c2b3a;
+      background-color: #295683;
       text-align: center;
       padding: 15px;
       font-size: 14px;
@@ -239,7 +238,7 @@
     transition: background 0.3s ease, color 0.3s ease;
   }
   .top-bar a:hover {
-    background-color: #3b4a5c; /* Matches theme */
+    background-color: #45668b; /* Matches theme */
     color: #ffffff;
   }
   
@@ -281,7 +280,7 @@
   }
   .feature-box:hover {
     transform: translateY(-5px);
-    background: #1e2a38;
+    background: #45668b;
   }
   .feature-box i {
     color: #e0f0ff;
