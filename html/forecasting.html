@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart AgriBuddy Forecasting</title>
+  <link rel="stylesheet" href="/css/forecasting.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1><img src="https://img.icons8.com/color/48/000000/plant-under-rain--v1.png"/> Smart AgriBuddy Forecasting</h1>
+
+    <div class="form-group">
+      <select id="cropSelect" onchange="renderPastTable()">
+        <option value="Wheat">Wheat</option>
+        <option value="Rice">Rice</option>
+        <option value="Corn">Corn</option>
+        <option value="Barley">Barley</option>
+        <option value="Soybean">Soybean</option>
+        <option value="Potato">Potato</option>
+        <option value="Tomato">Tomato</option>
+        <option value="Onion">Onion</option>
+      </select>
+      <select id="yearSelect"></select>
+      <select id="monthSelect">
+        <option value="0">January</option>
+        <option value="1">February</option>
+        <option value="2">March</option>
+        <option value="3">April</option>
+        <option value="4">May</option>
+        <option value="5">June</option>
+        <option value="6">July</option>
+        <option value="7">August</option>
+        <option value="8">September</option>
+        <option value="9">October</option>
+        <option value="10">November</option>
+        <option value="11">December</option>
+      </select>
+      <input type="number" id="supplyInput" placeholder="Supply (tons)" />
+      <input type="number" id="demandInput" placeholder="Demand (tons)" />
+      <button onclick="addForecast()">Add</button>
+      <button onclick="generateForecast()">Forecast This Year</button>
+      <button onclick="forecastNextYear()">Forecast Next Year</button>
+    </div>
+
+    <canvas id="forecastChart"></canvas>
+
+    <h3>Forecast Table</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Crop</th>
+          <th>Year</th>
+          <th>Month</th>
+          <th>Supply</th>
+          <th>Demand</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="forecastTableBody"></tbody>
+    </table>
+
+    <h3>Past 5-Year Data</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Year</th>
+          <th>Month</th>
+          <th>Crop</th>
+          <th>Supply</th>
+          <th>Demand</th>
+        </tr>
+      </thead>
+      <tbody id="pastDataTable"></tbody>
+    </table>
+  </div>
+
+  <script src="/js/forecasting.js"></script>
+</body>
+</html>
