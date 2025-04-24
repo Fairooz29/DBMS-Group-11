@@ -247,7 +247,7 @@ body {
 aside {
     background-color: #333;
     color: white;
-    width: 220px; /* Adjust width as needed */
+    width: 220px;
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -270,7 +270,7 @@ aside nav ul {
     width: 100%;
 }
 
-aside nav > ul > li > a { /* Style for top-level links */
+aside nav > ul > li > a {
     display: block;
     color: white;
     text-decoration: none;
@@ -288,14 +288,14 @@ aside nav > ul > li > a.active {
     background-color: #5cb85c;
 }
 
-aside nav ul ul { /* Style for sub-menus */
+aside nav ul ul {
     list-style: none;
     padding-left: 20px;
     margin-top: 5px;
     margin-bottom: 10px;
 }
 
-aside nav ul ul li a { /* Style for sub-menu links */
+aside nav ul ul li a {
     display: block;
     color: #ddd;
     text-decoration: none;
@@ -307,7 +307,6 @@ aside nav ul ul li a { /* Style for sub-menu links */
 
 aside nav ul ul li a:hover {
     background-color: #444;
-<<<<<<< HEAD
 }
 salman
 
@@ -410,6 +409,3 @@ main
 main
       
 main
-=======
-}
->>>>>>> parent of 23326aa (History FIXEDD)
