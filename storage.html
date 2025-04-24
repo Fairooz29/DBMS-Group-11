@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Storage</title>
+  <link rel="stylesheet" href="storage.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+  <div class="sidebar">
+    <h2>AGRITruck</h2>
+    <ul>
+      <li><a href="#"><i class="fas fa-home"></i> HOME</a></li>
+      <li><a href="#"><i class="fas fa-seedling"></i> PRODUCTS</a></li>
+      <li class="dropdown-btn"><i class="fas fa-warehouse"></i> WAREHOUSE <i class="fas fa-caret-down caret"></i></li>
+      <ul class="dropdown-container">
+        <li><a href="logistics.html"><i class="fas fa-truck"></i> Logistic</a></li>
+        <li><a href="inventory.html"><i class="fas fa-boxes"></i> Inventory</a></li>
+        <li><a href="storage.html"><i class="fas fa-store"></i> Storage</a></li>
+      </ul>
+      <li><a href="#"><i class="fas fa-chart-bar"></i> ANALYSIS</a></li>
+      <li><a href="#"><i class="fas fa-users"></i> CONSUMER</a></li>
+      <li><a href="#"><i class="fas fa-cloud-sun"></i> WEATHER APP</a></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <section class="logistics">
+      <h1>Storage Management</h1>
+      
+
+      <table>
+        <thead>
+          <tr>
+            <th>Storage ID</th>
+            <th>Location</th>
+            <th>Capacity (kg)</th>
+            <th>Type</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        </tbody>
+      </table>
+
+      <div class="add-logistic">
+        <h2>Add New Storage</h2>
+        
+        <input type="text" id="location" placeholder="Enter Location">
+        <input type="number" id="capacity" placeholder="Enter Capacity (kg)">
+        <select id="storageType">
+          <option value="">Select Storage Type</option>
+          <option value="Cold Storage">Cold Storage</option>
+          <option value="Dry Storage">Dry Storage</option>
+        </select>
+        <div class="action-buttons">
+          <button onclick="addStorage()">Add Storage</button>
+          <button class="edit" onclick="editLast()">Edit </button>
+          <button class="delete" onclick="deleteLast()">Delete </button>
+        </div>
+      </div>
+      
+    </section>
+  </div>
+
+  <script>
+    const dropdown = document.querySelector('.dropdown-btn');
+    const dropdownContent = document.querySelector('.dropdown-container');
+    dropdown.addEventListener('click', () => {
+      dropdown.classList.toggle('active');
+      dropdownContent.classList.toggle('show');
+    });
+  </script>
+</body>
+</html>
