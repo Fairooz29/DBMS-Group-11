@@ -226,4 +226,186 @@ table td button {
   #update-btn:hover {
     background-color: #e67e22;
   }
+salman
       
+
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+    display: flex;
+    min-height: 100vh;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+}
+
+aside {
+    background-color: #333;
+    color: white;
+    width: 220px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+aside header {
+    margin-bottom: 30px;
+}
+
+aside h1 {
+    font-size: 1.6em;
+    text-align: center;
+}
+
+aside nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+aside nav > ul > li > a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 12px 15px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+aside nav > ul > li > a:hover {
+    background-color: #555;
+}
+
+aside nav > ul > li > a.active {
+    font-weight: bold;
+    background-color: #5cb85c;
+}
+
+aside nav ul ul {
+    list-style: none;
+    padding-left: 20px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+aside nav ul ul li a {
+    display: block;
+    color: #ddd;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+}
+
+aside nav ul ul li a:hover {
+    background-color: #444;
+}
+salman
+
+aside footer {
+    margin-top: auto;
+    text-align: center;
+    font-size: 0.8em;
+    padding-top: 20px;
+    border-top: 1px solid #555;
+    width: 100%;
+}
+
+main {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+section {
+    margin-bottom: 30px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    color: #5cb85c;
+    margin-top: 0;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 8px 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table button {
+    padding: 6px 10px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.edit-btn {
+    background-color: #f0ad4e;
+    color: white;
+}
+
+.delete-btn {
+    background-color: #d9534f;
+    color: white;
+}
+
+table button:hover {
+    opacity: 0.8;
+}
+
+#add-row-btn {
+    margin-top: 10px;
+    padding: 10px 15px;
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+#add-row-btn:hover {
+    opacity: 0.8;
+}
+
+main
+main
+      
+main
