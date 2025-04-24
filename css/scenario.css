@@ -1,0 +1,39 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to right, #e0f7e9, #f0fff0);
+    margin: 0;
+    padding: 0;
+  }
+  .container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  }
+  h1, h3 {
+    text-align: center;
+    color: #2d6a4f;
+    margin-bottom: 20px;
+  }
+  .form-control, .btn {
+    border-radius: 8px;
+  }
+  .btn-primary {
+    background-color: #40916c;
+    border: none;
+  }
+  .btn-primary:hover {
+    background-color: #2d6a4f;
+  }
+  table {
+    margin-top: 20px;
+  }
+  .weather-btns button {
+    margin: 5px;
+  }
+  canvas {
+    margin-top: 40px;
+  }
+  
