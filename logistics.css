@@ -1,0 +1,173 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #f9f9f9;
+    display: flex;
+  }
+  
+  .sidebar {
+    width: 220px;
+    background: #eef6ec;
+    height: 100vh;
+    position: fixed;
+    padding: 20px;
+    border-right: 1px solid #ccc;
+    overflow-y: auto;
+  }
+  
+  .sidebar h2 {
+    font-size: 22px;
+    color: #1b5e20;
+    margin-bottom: 20px;
+  }
+  
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .sidebar ul li {
+    padding: 10px;
+    color: #333;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .sidebar ul li.active,
+  .sidebar ul li:hover {
+    background: #d0e6d0;
+    border-radius: 4px;
+  }
+  
+  .dropdown-container {
+    display: none;
+    padding-left: 15px;
+    background-color: #a9e6ac;
+  }
+  
+  .dropdown-container li a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+    padding: 5px 0;
+  }
+  
+  .main-content {
+    margin-left: 220px;
+    padding: 20px;
+    width: calc(100% - 220px);
+  }
+  
+  .topbar {
+    background-color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .topbar input[type="text"] {
+    width: 200px;
+    padding: 8px;
+  }
+  
+  .top-icons span {
+    margin-left: 20px;
+  }
+  
+  .logistics h1 {
+    margin-top: 0;
+    color: #2e7d32;
+  }
+  
+  .search-bar {
+    display: flex;
+    margin: 10px 0;
+  }
+  
+  .search-bar input {
+    padding: 8px;
+    flex: 1;
+    margin-right: 10px;
+  }
+  
+  .search-bar button {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+    background-color: white;
+  }
+  
+  table th,
+  table td {
+    padding: 12px;
+    border: 1px solid #ccc;
+    text-align: center;
+  }
+  
+  table th {
+    background-color: green;
+    color: white;
+  }
+  
+  button.edit {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-right: 5px;
+    cursor: pointer;
+  }
+  
+  button.delete {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .add-logistic {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  .add-logistic input[type="text"],
+  .add-logistic input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+  }
+  
+  .add-logistic button {
+    padding: 10px;
+    background-color: green;
+    color: white;
+    width: 20%;
+    border: none;
+    cursor: pointer;
+  }
+
+  .dropdown-container {
+    display: none;
+    padding-left: 20px;
+  }
+  
+  .dropdown-container.show {
+    display: block;
+  }
+  
