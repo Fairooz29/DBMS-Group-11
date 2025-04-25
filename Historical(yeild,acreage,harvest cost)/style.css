@@ -1,0 +1,177 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+    display: flex; /* To place sidebar and main side-by-side */
+    min-height: 100vh;
+}
+
+.container {
+    display: flex; /* For overall layout */
+    width: 100%;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    background-color: #333; /* Dark background for the sidebar */
+    color: white;
+    width: 200px; /* Adjust the width as needed */
+    padding: 20px;
+    box-sizing: border-box; /* Include padding in width */
+}
+
+.sidebar h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.sidebar .nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar .nav li {
+    margin-bottom: 10px;
+}
+
+.sidebar .nav li a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar .nav li a:hover {
+    background-color: #555;
+}
+
+/* Dropdown Styles */
+.sidebar .dropdown {
+    position: relative; /* For positioning the submenu */
+}
+
+.sidebar .dropdown a::after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid white;
+    display: inline-block;
+    margin-left: 5px;
+    vertical-align: middle;
+}
+
+.sidebar .dropdown .submenu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: absolute; /* Dropdown on top of other content */
+    top: 100%; /* Below the parent link */
+    left: 0;
+    background-color: #555;
+    border-radius: 4px;
+    z-index: 10; /* Ensure it's on top */
+    display: none; /* Hidden by default */
+}
+
+.sidebar .dropdown:hover .submenu {
+    display: block; /* Show submenu on hover */
+}
+
+.sidebar .dropdown .submenu li a {
+    padding: 10px 15px;
+    font-size: 0.9em;
+}
+
+/* Main Content Styles */
+main {
+    flex-grow: 1; /* Take up remaining width */
+    padding: 20px;
+}
+
+section {
+    margin-bottom: 30px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    color: #5cb85c;
+    margin-top: 0;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table button {
+    padding: 6px 10px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.edit-btn {
+    background-color: #f0ad4e;
+    color: white;
+}
+
+.delete-btn {
+    background-color: #d9534f;
+    color: white;
+}
+
+table button:hover {
+    opacity: 0.8;
+}
+
+#add-row-btn {
+    margin-top: 10px;
+    padding: 10px 15px;
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+#add-row-btn:hover {
+    opacity: 0.8;
+}

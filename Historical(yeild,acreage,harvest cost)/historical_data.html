@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop History</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h2>AgriTruck</h2>
+            <ul class="nav">
+                <li class="dropdown">
+                    <a href="#">Crop ▼</a>
+                    <ul class="submenu">
+                        <li><a href="crop.html">Crop Info</a></li>
+                        <li><a href="historical_data.html">Data</a></li>
+                    </ul>
+                </li>
+                <li><a href="consumer.html">Consumer</a></li>
+                <li><a href="warehouse.html">Real Time Supply</a></li>
+                <li><a href="trends.html">Trends</a></li>
+                <li><a href="#">Analytics</a></li>
+                <li><a href="#">Recommendations</a></li>
+                <li><a href="#">Directory</a></li>
+            </ul>
+        </div>
+
+        <main>
+            <section id="crop-history">
+                <h2>Crop History</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Crop ID</th>
+                                <th>Year</th>
+                                <th>Crop Variety</th>
+                                <th>Yield (e.g., tonnes/hectare)</th>
+                                <th>Acreage (e.g., hectares)</th>
+                                <th>Production Cost (e.g., BDT)</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>CROP001</td>
+                                <td>2020</td>
+                                <td>IR-64</td>
+                                <td>4.5</td>
+                                <td>1000</td>
+                                <td>50000</td>
+                                <td>
+                                    <button class="edit-btn">Edit</button>
+                                    <button class="delete-btn">Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>CROP002</td>
+                                <td>2021</td>
+                                <td>BRRI dhan28</td>
+                                <td>5.0</td>
+                                <td>1200</td>
+                                <td>60000</td>
+                                 <td>
+                                    <button class="edit-btn">Edit</button>
+                                    <button class="delete-btn">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button id="add-row-btn">Add Row</button>
+            </section>
+        </main>
+    </div>
+    <script>
+        const addRowBtn = document.getElementById('add-row-btn');
+        const tableBody = document.querySelector('table tbody');
+
+        addRowBtn.addEventListener('click', () => {
+            const newRow = tableBody.insertRow();
+            const numCols = 7; // Number of columns
+
+            for (let i = 0; i < numCols; i++) {
+                const newCell = newRow.insertCell();
+                if (i === numCols - 1) { // last column
+                    newCell.innerHTML = `<button class="edit-btn">Edit</button>
+                                         <button class="delete-btn">Delete</button>`;
+                } else {
+                    newCell.innerHTML = '<input type="text">'; // Or appropriate input
+                }
+            }
+            // Attach event listeners to the new buttons.
+            const editButton = newRow.querySelector('.edit-btn');
+            const deleteButton = newRow.querySelector('.delete-btn');
+            editButton.addEventListener('click', editRow);
+            deleteButton.addEventListener('click', deleteRow);
+        });
+
+        tableBody.addEventListener('click', (event) => {
+            if (event.target.classList.contains('edit-btn')) {
+                editRow(event.target);
+            } else if (event.target.classList.contains('delete-btn')) {
+                deleteRow(event.target);
+            }
+        });
+
+        function editRow(buttonElement) {
+            const row = buttonElement.closest('tr'); // Find the parent row
+            const cells = row.querySelectorAll('td:not(:last-child)'); // Exclude the Actions column
+
+            cells.forEach(cell => {
+                const text = cell.textContent;
+                cell.innerHTML = `<input type="text" value="${text}">`;
+            });
+
+            // Change the edit button text to "Save"
+            const editButton = buttonElement;
+            editButton.textContent = 'Save';
+            editButton.onclick = saveRow; // Change the event listener
+        }
+
+        function saveRow(buttonElement) {
+            const row = buttonElement.closest('tr');
+            const cells = row.querySelectorAll('td:not(:last-child)');
+
+            cells.forEach(cell => {
+                const input = cell.querySelector('input');
+                cell.textContent = input.value;
+            });
+
+             const editButton = buttonElement;
+             editButton.textContent = 'Edit';
+             editButton.onclick = editRow;
+        }
+
+        function deleteRow(buttonElement) {
+            const row = buttonElement.closest('tr');
+            row.remove();
+        }
+    </script>
+</body>
+</html>

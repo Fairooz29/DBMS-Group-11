@@ -1,0 +1,269 @@
+/* style.css */
+body {
+    font-family: sans-serif;
+    margin: 0;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    display: flex;
+    width: 90%;
+    max-width: 1200px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+aside {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+}
+
+aside header h1 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+aside nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+aside nav ul li a {
+    display: block;
+    color: #ddd;
+    text-decoration: none;
+    padding: 10px;
+    border-bottom: 1px solid #555;
+    transition: background-color 0.3s ease;
+}
+
+aside nav ul li a:hover {
+    background-color: #555;
+}
+
+aside nav ul li a.active {
+    background-color: #007bff;
+    color: #fff;
+}
+
+aside nav ul li ul {
+    display: none;
+    padding-left: 20px;
+}
+
+aside nav ul li:hover > ul {
+    display: block;
+    background-color: #444;
+}
+
+aside nav ul li ul li a {
+    border-bottom: none;
+}
+
+aside footer {
+    margin-top: auto;
+    text-align: center;
+    color: #ddd;
+    font-size: 0.9em;
+}
+
+main {
+    flex-grow: 1;
+    padding: 30px;
+}
+
+main section {
+    margin-bottom: 20px;
+}
+
+main h2 {
+    color: #333;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+/* Add button styling */
+main button {
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+main button:hover {
+    background-color: #0056b3;
+}
+
+.table-container {
+    overflow-x: auto;
+    margin: 20px 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
+}
+
+thead th {
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 2px solid #ddd;
+}
+
+tbody td {
+    padding: 10px 15px;
+    border-bottom: 1px solid #eee;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+tbody td button {
+    padding: 8px 12px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+}
+
+tbody td button:first-child {
+    background-color: #5cb85c;
+    color: white;
+}
+
+tbody td button:nth-child(1):not(:first-child) { /* Style the first button in the Actions column */
+    background-color: #007bff;
+    color: white;
+}
+
+tbody td button:last-child {
+    background-color: #d9534f;
+    color: white;
+}
+
+tbody td button:hover {
+    opacity: 0.8;
+}
+
+/* Add borders to table cells */
+table, th, td {
+    border: 1px solid #ccc; /* Add a 1px solid gray border */
+}
+
+thead th, tbody td {
+    border: 1px solid #ccc; /* Ensure borders are also on the content cells */
+}
+
+/* Style input elements in the table */
+tbody td input[type="text"],
+tbody td input[type="number"] {
+    width: 80%;
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
+}
+
+/* General button styling */
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #009879;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effect for buttons */
+button:hover {
+    background-color: #007f63;
+}
+
+/* Responsive button styling */
+#add-row-btn {
+    display: block;
+    margin: 10px auto; /* Center the button */
+    width: 90%; /* Make it responsive */
+    max-width: 300px; /* Limit the maximum width */
+    text-align: center;
+}
+
+/* Responsive table styling */
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.styled-table th, .styled-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.styled-table thead {
+    background-color: #009879;
+    color: #fff;
+}
+
+.styled-table tbody tr:nth-child(even) {
+    background-color: #f3f3f3;
+}
+
+<div class="table-container">
+    <button id="add-row-btn">Add Row</button>
+    <table class="styled-table" id="yield-table">
+        <thead>
+            <tr>
+                <th>Year</th>
+                <th>Crop</th>
+                <th>Yield (in tons)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>2020</td>
+                <td>Wheat</td>
+                <td>500</td>
+                <td>
+                    <button class="edit-btn">Edit</button>
+                    <button class="delete-btn">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
