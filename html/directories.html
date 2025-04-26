@@ -29,14 +29,12 @@
   <div class="container">
     <h1>Buyer and Seller Directories</h1>
 
-    <div class="card buyer">
+    <div class="card">
       <div class="card-header">Buyers List</div>
       <form id="buyerForm">
         <input type="text" id="buyerId" placeholder="ID">
         <input type="text" id="buyerName" placeholder="Name">
-        <input type="text" id="buyerLocation" placeholder="Location">
-        <input type="text" id="buyerCrop" placeholder="Crop">
-        <input type="text" id="buyerContact" placeholder="Contact">
+        <input type="email" id="buyerEmail" placeholder="Email">
         <button type="button" class="btn btn-add" onclick="addBuyer()">Add Buyer</button>
       </form>
       <table id="buyerTable">
@@ -44,9 +42,7 @@
           <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Location</th>
-            <th>Crop</th>
-            <th>Contact</th>
+            <th>Email</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -54,13 +50,14 @@
       </table>
     </div>
 
-    <div class="card seller">
+    <div class="card">
       <div class="card-header">Sellers List</div>
       <form id="sellerForm">
         <input type="text" id="sellerId" placeholder="ID">
         <input type="text" id="sellerName" placeholder="Name">
-        <input type="text" id="sellerLocation" placeholder="Location">
-        <input type="text" id="sellerCrop" placeholder="Crop">
+        <input type="text" id="sellerThana" placeholder="Thana">
+        <input type="text" id="sellerZip" placeholder="Zip Code">
+        <input type="text" id="sellerCity" placeholder="City">
         <input type="text" id="sellerContact" placeholder="Contact">
         <button type="button" class="btn btn-add" onclick="addSeller()">Add Seller</button>
       </form>
@@ -69,8 +66,9 @@
           <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Location</th>
-            <th>Crop</th>
+            <th>Thana</th>
+            <th>Zip</th>
+            <th>City</th>
             <th>Contact</th>
             <th>Action</th>
           </tr>
@@ -81,6 +79,5 @@
   </div>
 
   <script src="/js/directories.js"></script>
-  
 </body>
 </html>
