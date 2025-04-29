@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Farmer Recommendations - AgriTrack</title>
+  <link rel="stylesheet" href="admin.css" />
+  <link rel="stylesheet" href="recommendation.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Same Sidebar as admin.html -->
+    <div class="sidebar">
+      <h2>AgriTrack</h2>
+      <ul class="nav">
+        <li class="dropdown">
+          <a href="#">Crop ▾</a>
+          <ul class="submenu">
+            <li><a href="#">Crop Info</a></li>
+            <li><a href="historical_data.html">Data</a></li>
+          </ul>
+        </li>
+        <li><a href="consumer.html">Consumer</a></li>
+        <li><a href="warehouse.html">Real Time Supply</a></li>
+        <li><a href="trends.html">Trends</a></li>
+        <li><a href="#">Analytics</a></li>
+        <li><a href="recommendations.html" class="active">Recommendations</a></li>
+        <li><a href="#">Directory</a></li>
+      </ul>
+    </div>
+    
+    <!-- Main Content Area -->
+    <div class="main-content">
+      <div class="recommendations-container">
+        <h1><i class="fas fa-lightbulb"></i> Personalized Crop Recommendations</h1>
+        
+        <!-- Farmer Profile Summary -->
+        <div class="profile-summary">
+          <div class="profile-card">
+            <div class="profile-info">
+              <img src="images/farmer" alt="Farmer" class="profile-img">
+              <div>
+                <h3>Rahim Mia</h3>
+                <p><i class="fas fa-map-marker-alt"></i>Dinajpur, Bangladesh</p>
+              </div>
+            </div>
+            <div class="farm-stats">
+              <div class="stat-item">
+                <span class="stat-value">5.2</span>
+                <span class="stat-label">Acres</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-value">3</span>
+                <span class="stat-label">Current Crops</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-value">8.2/10</span>
+                <span class="stat-label">Soil Quality</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Current Season Recommendations -->
+        <section class="recommendation-section">
+          <h2><i class="fas fa-seedling"></i> Current Season Recommendations</h2>
+          <div class="recommendation-cards">
+            <!-- Recommendation 1 -->
+            <div class="recommendation-card high-priority">
+              <div class="card-header">
+                <h3>Switch to IR-64 Rice Variety</h3>
+                <span class="priority-badge">High Priority</span>
+              </div>
+              <div class="card-body">
+                <p>Based on your soil conditions and market demand, switching to IR-64 could increase your yield by 22% this season.</p>
+                <div class="metrics">
+                  <div class="metric">
+                    <span class="metric-label">Yield Increase</span>
+                    <span class="metric-value positive">+22%</span>
+                  </div>
+                  <div class="metric">
+                    <span class="metric-label">Water Needs</span>
+                    <span class="metric-value">Moderate</span>
+                  </div>
+                  <div class="metric">
+                    <span class="metric-label">Market Price</span>
+                    <span class="metric-value positive">₹2,850/ton</span>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <button class="btn btn-primary">View Details</button>
+                <button class="btn btn-outline">Dismiss</button>
+              </div>
+            </div>
+            
+            <!-- Recommendation 2 -->
+            <div class="recommendation-card medium-priority">
+              <div class="card-header">
+                <h3>Optimal Planting Dates</h3>
+                <span class="priority-badge">Medium Priority</span>
+              </div>
+              <div class="card-body">
+                <p>Adjust your wheat planting schedule to October 15-25 to avoid early frost damage and improve germination rates.</p>
+                <div class="metrics">
+                  <div class="metric">
+                    <span class="metric-label">Frost Risk</span>
+                    <span class="metric-value positive">-40%</span>
+                  </div>
+                  <div class="metric">
+                    <span class="metric-label">Germination</span>
+                    <span class="metric-value positive">+15%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <button class="btn btn-primary">View Details</button>
+                <button class="btn btn-outline">Dismiss</button>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Long-Term Recommendations -->
+        <section class="recommendation-section">
+          <h2><i class="fas fa-calendar-alt"></i> Long-Term Improvements</h2>
+          <div class="recommendation-cards">
+            <!-- Recommendation 3 -->
+            <div class="recommendation-card">
+              <div class="card-header">
+                <h3>Soil Enrichment Program</h3>
+                <span class="priority-badge">Advisory</span>
+              </div>
+              <div class="card-body">
+                <p>Your soil tests show declining organic matter. A 3-year crop rotation with legumes could improve fertility by 35%.</p>
+                <div class="metrics">
+                  <div class="metric">
+                    <span class="metric-label">Fertility Gain</span>
+                    <span class="metric-value positive">+35%</span>
+                  </div>
+                  <div class="metric">
+                    <span class="metric-label">Timeframe</span>
+                    <span class="metric-value">3 Years</span>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <button class="btn btn-primary">View Plan</button>
+                <button class="btn btn-outline">Remind Later</button>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Accepted Recommendations -->
+        <section class="accepted-recommendations">
+          <h2><i class="fas fa-check-circle"></i> Your Accepted Recommendations</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Recommendation</th>
+                <th>Status</th>
+                <th>Impact</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>15 Mar 2025</td>
+                <td>Organic fertilizer blend application</td>
+                <td><span class="status in-progress">In Progress</span></td>
+                <td>Projected +8% yield</td>
+                <td>
+                  <button class="btn btn-sm btn-primary">Update</button>
+                  <button class="btn btn-sm btn-danger">Cancel</button>
+                </td>
+              </tr>
+              <tr>
+                <td>02 Feb 2025</td>
+                <td>Drip irrigation installation</td>
+                <td><span class="status completed">Completed</span></td>
+                <td>Water saved: 35%</td>
+                <td>
+                  <button class="btn btn-sm btn-primary">View Report</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

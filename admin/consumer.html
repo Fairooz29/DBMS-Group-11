@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Consumer Demand Data</title>
+  <link rel="stylesheet" href="consumer.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h2>AgriTruck</h2>
+      <ul class="nav">
+        <li class="dropdown">
+          <a href="#">Crop ▾</a>
+          <ul class="submenu">
+            <li><a href="#">Crop Info</a></li>
+            <li><a href="historical_data.html">Data</a></li>
+          </ul>
+        </li>
+        <li><a href="consumer.html">Consumer</a></li>
+        <li><a href="warehouse.html">Real Time Supply</a></li>
+        <li><a href="trends.html">Trends</a></li>
+        <li><a href="#">Analytics</a></li>
+        <li><a href="#">Recommendations</a></li>
+        <li><a href="#">Directory</a></li>
+      </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <h1>Product vs Consumption Rate</h1>
+      <canvas id="consumptionChart" width="800" height="400"></canvas>
+
+      <h1>Product vs Price Elasticity</h1>
+      <canvas id="elasticityChart" width="800" height="400"></canvas>
+
+      <div class="form-group">
+        <select id="productId">
+          <option value="101">101</option>
+          <option value="107">107</option>
+          <option value="108">108</option>
+          <option value="109">109</option>
+          <option value="110">110</option>
+        </select>
+        <select id="rate">
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+        </select>
+        <button onclick="addData()">Add Data</button>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Product ID</th>
+            <th>Consumption Rate</th>
+            <th>Demand</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="dataTable">
+          <tr><td>101</td><td>Low</td><td>0.5</td><td><button class="btn edit">Edit</button><button class="btn delete">Delete</button></td></tr>
+          <tr><td>107</td><td>High</td><td>3</td><td><button class="btn edit">Edit</button><button class="btn delete">Delete</button></td></tr>
+          <tr><td>108</td><td>Medium</td><td>2</td><td><button class="btn edit">Edit</button><button class="btn delete">Delete</button></td></tr>
+          <tr><td>109</td><td>Low</td><td>1</td><td><button class="btn edit">Edit</button><button class="btn delete">Delete</button></td></tr>
+          <tr><td>110</td><td>Medium</td><td>2</td><td><button class="btn edit">Edit</button><button class="btn delete">Delete</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const chartCtx = document.getElementById("consumptionChart").getContext("2d");
+    const chart = new Chart(chartCtx, {
+      type: "bar",
+      data: {
+        labels: ["101", "107", "108", "109", "110"],
+        datasets: [{
+          label: "Demand (Consumption Rate)",
+          data: [0.5, 3, 2, 1, 2],
+          backgroundColor: ["#FF6B6B", "#4D96FF", "#33CC99", "#FFA500", "#33CC99"]
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: { display: true, text: 'Demand Value' }
+          },
+          x: {
+            title: { display: true, text: 'Product ID' }
+          }
+        }
+      }
+    });
+
+    const elasticityCtx = document.getElementById("elasticityChart").getContext("2d");
+    const elasticityChart = new Chart(elasticityCtx, {
+      type: "bar",
+      data: {
+        labels: ["101", "107", "108", "109", "110"],
+        datasets: [{
+          label: "Price Elasticity",
+          data: [1.2, 0.8, 1.5, 1.1, 0.9],
+          backgroundColor: ["#A569BD", "#5DADE2", "#58D68D", "#F5B041", "#EC7063"]
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: { display: true, text: 'Elasticity Value' }
+          },
+          x: {
+            title: { display: true, text: 'Product ID' }
+          }
+        }
+      }
+    });
+
+    function addData() {
+      const product = document.getElementById("productId").value;
+      const rate = document.getElementById("rate").value;
+      let demandValue = rate === "High" ? 3 : rate === "Medium" ? 2 : 0.5;
+
+      chart.data.labels.push(product);
+      chart.data.datasets[0].data.push(demandValue);
+      chart.update();
+
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${product}</td>
+        <td>${rate}</td>
+        <td>${demandValue}</td>
+        <td>
+          <button class="btn edit">Edit</button>
+          <button class="btn delete">Delete</button>
+        </td>`;
+      document.getElementById("dataTable").appendChild(row);
+    }
+  </script>
+</body>
+</html>

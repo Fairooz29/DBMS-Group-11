@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Panel - Agricultural App</title>
+  <link rel="stylesheet" href="admin.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <!-- Sidebar (unchanged from your original) -->
+    <div class="sidebar">
+      <h2>AgriTruck</h2>
+      <ul class="nav">
+        <li class="dropdown">
+          <a href="#">Crop ▾</a>
+          <ul class="submenu">
+            <li><a href="#">Crop Info</a></li>
+            <li><a href="historical_data.html">Data</a></li>
+          </ul>
+        </li>
+        <li><a href="consumer.html">Consumer</a></li>
+        <li><a href="warehouse.html">Real Time Supply</a></li>
+        <li><a href="trends.html">Trends</a></li>
+        <li><a href="#">Analytics</a></li>
+        <li><a href="#">Recommendations</a></li>
+        <li><a href="#">Directory</a></li>
+      </ul>
+    </div>
+    
+    <!-- Main Content - Updated -->
+    <div class="main-content">
+      <header class="top-nav">
+        <div class="search-container">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Search..." />
+        </div>
+        <div class="top-actions">
+          <span class="notification-icon"><i class="fas fa-envelope"></i></span>
+          <span class="notification-icon"><i class="fas fa-bell"></i></span>
+          <span class="user"><i class="fas fa-user-circle"></i> KANKHITA</span>
+        </div>
+      </header>
+
+      <div class="dashboard-overview">
+        <h1>Agricultural Demand-Supply Dashboard</h1>
+        <div class="stats-cards">
+          <div class="card card-purple">
+            <div class="card-content">
+              <h3>Weekly Sales</h3>
+              <h2>₹ 15,0000</h2>
+              <p class="positive"><i class="fas fa-arrow-up"></i> Increased by 40%</p>
+            </div>
+            <div class="card-icon">
+              <i class="fas fa-shopping-cart"></i>
+            </div>
+          </div>
+          
+          <div class="card card-blue">
+            <div class="card-content">
+              <h3>Weekly Orders</h3>
+              <h2>45,6334</h2>
+              <p class="negative"><i class="fas fa-arrow-down"></i> Decreased by 19%</p>
+            </div>
+            <div class="card-icon">
+              <i class="fas fa-clipboard-list"></i>
+            </div>
+          </div>
+          
+          <div class="card card-orange">
+            <div class="card-content">
+              <h3>Active Farmers</h3>
+              <h2>95,5741</h2>
+              <p class="positive"><i class="fas fa-arrow-up"></i> Increased by 5%</p>
+            </div>
+            <div class="card-icon">
+              <i class="fas fa-users"></i>
+            </div>
+          </div>
+        </div>
+        
+        <div class="chart-row">
+          <div class="chart-container">
+            <h3>Demand vs Supply Analysis</h3>
+            <canvas id="demandSupplyChart"></canvas>
+          </div>
+          <div class="chart-container">
+            <h3>Price Trends</h3>
+            <canvas id="priceTrendChart"></canvas>
+          </div>
+        </div>
+        
+        <div class="chart-row">
+          <div class="chart-container">
+            <h3>Seasonal Production</h3>
+            <canvas id="seasonalChart"></canvas>
+          </div>
+          <div class="pie-chart-container">
+            <h3>Crop Distribution</h3>
+            <canvas id="cropDistributionChart"></canvas>
+          </div>
+        </div>
+        
+        <div class="product-list">
+          <div class="section-header">
+            <h3>CHASHBASH : PRODUCT LIST</h3>
+            <button class="add-btn">➕ ADD YOUR PRODUCTS</button>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Product ID</th>
+                <th>Product Name</th>
+                <th>Type</th>
+                <th>Variety</th>
+                <th>Seasonality</th>
+                <th>Historical Price</th>
+                <th>Current Price</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>16</td>
+                <td>Onions</td>
+                <td>Large</td>
+                <td>Indian</td>
+                <td>All</td>
+                <td>250</td>
+                <td>300</td>
+                <td><button class="btn btn_edit">Edit</button> <button class="btn btn_delete">Delete</button></td>
+              </tr>
+              <tr>
+                <td>20</td>
+                <td>Rice</td>
+                <td>Mini-Cut</td>
+                <td>Deshi</td>
+                <td>All</td>
+                <td>158</td>
+                <td>250</td>
+                <td><button class="btn btn_edit">Edit</button> <button class="btn btn_delete">Delete</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="admin.js"></script>
+</body>
+</html>
