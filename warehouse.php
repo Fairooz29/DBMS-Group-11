@@ -273,3 +273,139 @@ label[for="qty"]::before { content: '🔢'; margin-right: 5px; }
         exit;
     }
     ?>
+
+<script>
+        let currentType = '';
+        let editRowRef = null;
+        let cropsData = [];
+
+        // Fetch crops data when page loads
+        window.onload = function() {
+            fetch('get_crops.php')
+                .then(response => response.json())
+                .then(data => {
+                    cropsData = data;
+                })
+                .catch(error => console.error('Error loading crops:', error));
+        };
+
+        function openModal(type, row = null) {
+            currentType = type;
+            editRowRef = row;
+            document.getElementById('modal-title').innerText = `${row ? 'Edit' : 'Add'} ${type}`;
+            document.getElementById('modal').style.display = 'flex';
+            renderFormFields(type, row);
+            document.getElementById('save-btn').style.display = row ? 'none' : 'block';
+            document.getElementById('update-btn').style.display = row ? 'block' : 'none';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+            editRowRef = null;
+        }
+
+        function renderFormFields(type, row = null) {
+            const container = document.getElementById('form-fields');
+            let values = row ? [...row.children].map(cell => cell.textContent) : [];
+            
+            // Generate crop options dropdown
+            let cropOptions = '<option value="">Select a crop</option>';
+            cropsData.forEach(crop => {
+                const selected = values[1] == crop.CropId ? 'selected' : '';
+                cropOptions += `<option value="${crop.CropId}" ${selected}>${crop.CropName} (ID: ${crop.CropId})</option>`;
+            });
+
+            let html = '';
+            if (type === 'logistics') {
+                html = `
+                    <label for="crop-id">Crop:</label>
+                    <select id="crop-id" required>
+                        ${cropOptions}
+                    </select>
+                    
+                    <label for="details">Location:</label>
+                    <input type="text" id="details" placeholder="Location" value="${values[3] || ''}" required>
+                    
+                    <label for="date">Date:</label>
+                    <input type="date" id="date" value="${values[4] || ''}" required>
+                    
+                    <label for="qty">Quantity:</label>
+                    <input type="number" id="qty" placeholder="Quantity" value="${values[5] || ''}" required>
+                `;
+            } else if (type === 'inventory') {
+                html = `
+                    <label for="crop-id">Crop:</label>
+                    <select id="crop-id" required>
+                        ${cropOptions}
+                    </select>
+                    
+                    <label for="details">Warehouse Location:</label>
+                    <input type="text" id="details" placeholder="Warehouse Location" value="${values[3] || ''}" required>
+                    
+                    <label for="date">Date:</label>
+                    <input type="date" id="date" value="${values[4] || ''}" required>
+                    
+                    <label for="qty">Storage Quantity:</label>
+                    <input type="number" id="qty" placeholder="Storage Quantity" value="${values[5] || ''}" required>
+                `;
+            } else if (type === 'storage') {
+                html = `
+                    <label for="storage-id">Storage ID:</label>
+                    <input type="text" id="crop-id" placeholder="Storage ID" value="${values[1] || ''}" required>
+                    
+                    <label for="details">Location:</label>
+                    <input type="text" id="details" placeholder="Location" value="${values[3] || ''}" required>
+                    
+                    <label for="date">Date:</label>
+                    <input type="date" id="date" value="${values[4] || ''}" required>
+                    
+                    <label for="qty">Capacity:</label>
+                    <input type="number" id="qty" placeholder="Capacity" value="${values[5] || ''}" required>
+                `;
+            }
+
+            container.innerHTML = html;
+        }
+
+        function validateForm() {
+            if (currentType !== 'storage') {
+                const cropSelect = document.getElementById('crop-id');
+                if (!cropSelect || !cropSelect.value) {
+                    alert('Please select a crop for this entry type');
+                    return false;
+                }
+            }
+            
+            // Validate required fields
+            const requiredFields = ['details', 'date', 'qty'];
+            for (const field of requiredFields) {
+                const element = document.getElementById(field);
+                if (!element || !element.value) {
+                    alert(`Please fill in the ${field.replace('-', ' ')} field`);
+                    return false;
+                }
+            }
+            
+            return true;
+        }
+
+        function processForm(action) {
+            if (!validateForm()) return;
+            
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.style.display = 'none';
+            
+            const actionInput = document.createElement('input');
+            actionInput.type = 'hidden';
+            actionInput.name = 'action';
+            actionInput.value = action;
+            form.appendChild(actionInput);
+            
+            if (action === 'update' || action === 'delete') {
+                const idInput = document.createElement('input');
+                idInput.type = 'hidden';
+                idInput.name = 'id';
+                idInput.value = editRowRef ? editRowRef.dataset.id : '';
+                form.appendChild(idInput);
+            }
