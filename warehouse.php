@@ -97,3 +97,81 @@ label[for="qty"]::before { content: '🔢'; margin-right: 5px; }
             <li><a href="#">Directory</a></li>
         </ul>
     </div>
+
+    <div class="main-content">
+        <div class="top-cards">
+            <div class="card">Sales: <strong id="sales-count">0</strong></div>
+            <div class="card">Stock: <strong id="stock-count">0</strong></div>
+            <div class="card">Inbound: <strong id="inbound-count">0</strong></div>
+        </div>
+
+        <div class="tabs">
+            <div>
+                <button onclick="openModal('logistics')">Add Logistics</button>
+                <button onclick="openModal('inventory')">Add Inventory</button>
+                <button onclick="openModal('storage')">Add Storage</button>
+            </div>
+            <input type="text" id="searchInput" placeholder="Search table..." onkeyup="searchTable()">
+        </div>
+
+        <h2>Real-time supply Data</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Stage</th>
+                    <th>Crop ID</th>
+                    <th>Crop Name</th>
+                    <th>Location</th>
+                    <th>Date</th>
+                    <th>Quantity</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="data-table">
+                <?php
+                // Database connection
+                $conn = new mysqli("localhost", "root", "", "agritruck");
+                
+                if ($conn->connect_error) {
+                    die("<tr><td colspan='7'>Connection failed: " . $conn->connect_error . "</td></tr>");
+                }
+                
+                // Load data from warehouse table
+                $sql = "SELECT warehouseId as id, stage, CropId as crop_id, CropName as crop_name, 
+                        date, quantity, details FROM warehouse ORDER BY warehouseId DESC";
+                $result = $conn->query($sql);
+                
+                // Initialize counters
+                $salesCount = 0;
+                $stockCount = 0;
+                $inboundCount = 0;
+                
+                if ($result->num_rows > 0) {
+                    while($row = $result->fetch_assoc()) {
+                        // Update counters based on stage
+                        if ($row['stage'] === 'logistics') $salesCount++;
+                        elseif ($row['stage'] === 'inventory') $stockCount++;
+                        elseif ($row['stage'] === 'storage') $inboundCount++;
+                        
+                        echo "<tr data-id='".$row['id']."'>
+                            <td>".htmlspecialchars($row['stage'])."</td>
+                            <td>".($row['crop_id'] ? htmlspecialchars($row['crop_id']) : '-')."</td>
+                            <td>".($row['crop_name'] ? htmlspecialchars($row['crop_name']) : '-')."</td>
+                            <td>".htmlspecialchars($row['details'])."</td>
+                            <td>".htmlspecialchars($row['date'])."</td>
+                            <td>".htmlspecialchars($row['quantity'])."</td>
+                            <td>
+                                <button class='edit-btn' onclick=\"openModal('".$row['stage']."', this.closest('tr'))\">Edit</button>
+                                <button class='delete-btn' onclick=\"deleteEntry(this)\">Delete</button>
+                            </td>
+                        </tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='7'>No data found in warehouse</td></tr>";
+                }
+                
+                // Close connection
+                $conn->close();
+                ?>
+            </tbody>
+        </table>
