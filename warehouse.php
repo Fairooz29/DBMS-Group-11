@@ -175,3 +175,101 @@ label[for="qty"]::before { content: '🔢'; margin-right: 5px; }
                 ?>
             </tbody>
         </table>
+        <script>
+            // Update counts with PHP values
+            document.getElementById('sales-count').textContent = <?php echo $salesCount; ?>;
+            document.getElementById('stock-count').textContent = <?php echo $stockCount; ?>;
+            document.getElementById('inbound-count').textContent = <?php echo $inboundCount; ?>;
+        </script>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h3 id="modal-title">Add Data</h3>
+            <div id="form-fields"></div>
+            <button id="save-btn" onclick="processForm('save')">Save</button>
+            <button id="update-btn" onclick="processForm('update')" style="display: none;">Update</button>
+        </div>
+    </div>
+
+    <?php
+    // Handle form submissions
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $conn = new mysqli("localhost", "root", "", "agritruck");
+        
+        if ($conn->connect_error) {
+            die(json_encode(["status" => "error", "message" => "Connection failed"]));
+        }
+        
+        // Temporarily disable foreign key checks
+        $conn->query("SET FOREIGN_KEY_CHECKS=0");
+        
+        $action = $_POST['action'] ?? '';
+        $id = $_POST['id'] ?? 0;
+        $stage = $_POST['stage'] ?? '';
+        $crop_id = isset($_POST['crop_id']) && $_POST['crop_id'] !== '' ? $_POST['crop_id'] : NULL;
+        $crop_name = isset($_POST['crop_name']) && $_POST['crop_name'] !== '' ? $_POST['crop_name'] : NULL;
+        $date = $_POST['date'] ?? '';
+        $qty = $_POST['qty'] ?? 0;
+        $details = $_POST['details'] ?? '';
+        
+        // For storage entries, explicitly set crop_id and crop_name to NULL
+        if ($stage === 'storage') {
+            $crop_id = NULL;
+            $crop_name = NULL;
+        }
+        
+        // For logistics and inventory, validate crop exists if crop_id is provided
+        if (($stage === 'logistics' || $stage === 'inventory') && $crop_id !== NULL) {
+            $checkSql = "SELECT CropId, CropName FROM crop WHERE CropId = ?";
+            $checkStmt = $conn->prepare($checkSql);
+            $checkStmt->bind_param("i", $crop_id);
+            $checkStmt->execute();
+            $checkResult = $checkStmt->get_result();
+            
+            if ($checkResult->num_rows === 0) {
+                $conn->query("SET FOREIGN_KEY_CHECKS=1");
+                die("<script>alert('Error: The specified Crop ID does not exist in our system.'); window.history.back();</script>");
+            }
+            
+            // Get the crop name from database
+            $cropData = $checkResult->fetch_assoc();
+            $crop_name = $cropData['CropName'];
+            $checkStmt->close();
+        }
+        
+        if ($action === 'save') {
+            $sql = "INSERT INTO warehouse (stage, CropId, CropName, date, quantity, details)
+                    VALUES (?, ?, ?, ?, ?, ?)";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("sisssi", $stage, $crop_id, $crop_name, $date, $qty, $details);
+        } 
+        elseif ($action === 'update') {
+            $sql = "UPDATE warehouse SET stage=?, CropId=?, CropName=?, date=?, quantity=?, details=? 
+                    WHERE warehouseId=?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("sisssii", $stage, $crop_id, $crop_name, $date, $qty, $details, $id);
+        }
+        elseif ($action === 'delete') {
+            $sql = "DELETE FROM warehouse WHERE warehouseId=?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("i", $id);
+        }
+        
+        if ($stmt->execute()) {
+            echo "<script>alert('Operation successful!'); window.location.href = window.location.href;</script>";
+        } else {
+            $errorMsg = $stmt->error;
+            echo "<script>alert('Error: " . addslashes($errorMsg) . "'); window.history.back();</script>";
+        }
+        
+        // Re-enable foreign key checks
+        $conn->query("SET FOREIGN_KEY_CHECKS=1");
+        
+        $stmt->close();
+        $conn->close();
+        exit;
+    }
+    ?>
