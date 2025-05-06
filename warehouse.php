@@ -409,3 +409,89 @@ label[for="qty"]::before { content: '🔢'; margin-right: 5px; }
                 idInput.value = editRowRef ? editRowRef.dataset.id : '';
                 form.appendChild(idInput);
             }
+            if (action !== 'delete') {
+                const stageInput = document.createElement('input');
+                stageInput.type = 'hidden';
+                stageInput.name = 'stage';
+                stageInput.value = currentType;
+                form.appendChild(stageInput);
+                
+                const cropIdInput = document.createElement('input');
+                cropIdInput.type = 'hidden';
+                cropIdInput.name = 'crop_id';
+                cropIdInput.value = document.getElementById('crop-id')?.value || '';
+                form.appendChild(cropIdInput);
+                
+                // Only include crop_name for logistics and inventory
+                if (currentType !== 'storage') {
+                    const cropNameInput = document.createElement('input');
+                    cropNameInput.type = 'hidden';
+                    cropNameInput.name = 'crop_name';
+                    const cropSelect = document.getElementById('crop-id');
+                    if (cropSelect) {
+                        const selectedOption = cropSelect.options[cropSelect.selectedIndex];
+                        cropNameInput.value = selectedOption ? selectedOption.text.split('(')[0].trim() : '';
+                    }
+                    form.appendChild(cropNameInput);
+                }
+                
+                const dateInput = document.createElement('input');
+                dateInput.type = 'hidden';
+                dateInput.name = 'date';
+                dateInput.value = document.getElementById('date')?.value || '';
+                form.appendChild(dateInput);
+                
+                const qtyInput = document.createElement('input');
+                qtyInput.type = 'hidden';
+                qtyInput.name = 'qty';
+                qtyInput.value = document.getElementById('qty')?.value || '';
+                form.appendChild(qtyInput);
+                
+                const detailsInput = document.createElement('input');
+                detailsInput.type = 'hidden';
+                detailsInput.name = 'details';
+                detailsInput.value = document.getElementById('details')?.value || '';
+                form.appendChild(detailsInput);
+            }
+            
+            document.body.appendChild(form);
+            form.submit();
+        }
+
+        function deleteEntry(btn) {
+            if (confirm("Are you sure you want to delete this entry?")) {
+                const row = btn.closest('tr');
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.style.display = 'none';
+                
+                const actionInput = document.createElement('input');
+                actionInput.type = 'hidden';
+                actionInput.name = 'action';
+                actionInput.value = 'delete';
+                form.appendChild(actionInput);
+                
+                const idInput = document.createElement('input');
+                idInput.type = 'hidden';
+                idInput.name = 'id';
+                idInput.value = row.dataset.id;
+                form.appendChild(idInput);
+                
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+
+        function searchTable() {
+            const value = document.getElementById("searchInput").value.toLowerCase();
+            const rows = document.querySelectorAll("#data-table tr");
+            
+            rows.forEach(row => {
+                if (row.cells) {
+                    row.style.display = row.innerText.toLowerCase().includes(value) ? "" : "none";
+                }
+            });
+        }
+    </script>
+</body>
+</html>
