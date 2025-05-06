@@ -20,7 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $isLogin = !isset($_POST['email']);
 
     if ($isLogin) {
-      
         if (empty($username) || empty($password)) {
             $response = ['success' => false, 'message' => 'Username and password are required'];
         } else {
@@ -38,7 +37,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $_SESSION['username'] = $user['username'];
                     $_SESSION['designation'] = $user['designation'];
                     
-                    
                     $response = [
                         'success' => true, 
                         'message' => 'Login successful',
@@ -50,7 +48,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
     } else {
-        
         if (empty($username) || empty($password) || empty($email)) {
             $response = ['success' => false, 'message' => 'All fields are required'];
         } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -76,7 +73,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
     }
-    
     
     if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
         header('Content-Type: application/json');
@@ -128,8 +124,11 @@ function getRedirectUrl($designation) {
         <label for="username">Username</label>
       </div>
       <div class="input-group">
-        <input type="password" id="password" name="password" required placeholder=" " />
-        <label for="password">Password</label>
+        <div class="password-container">
+          <input type="password" id="password" name="password" required placeholder=" " />
+          <label for="password">Password</label>
+          <span class="toggle-password" onclick="togglePasswordVisibility()">👁️</span>
+        </div>
       </div>
       <div class="input-group" id="email-group">
         <input type="email" id="email" name="email" placeholder=" " />
@@ -141,7 +140,7 @@ function getRedirectUrl($designation) {
           <option value="admin">Admin</option>
           <option value="crop_researcher">Crop Researcher</option>
           <option value="customer">Customer</option>
-          <option value="customer">Farmer</option>
+          <option value="farmer">Farmer</option>
         </select>
         <label for="designation">Designation</label>
       </div>
@@ -160,7 +159,7 @@ function getRedirectUrl($designation) {
   </div>
 </div>
 
-  <script>
+<script>
     document.addEventListener('DOMContentLoaded', function() {
       const toggleLink = document.getElementById('toggle-link');
       const formTitle = document.getElementById('form-title');
@@ -170,6 +169,9 @@ function getRedirectUrl($designation) {
       const authForm = document.getElementById('auth-form');
       let isLogin = true;
 
+      
+      emailGroup.style.display = 'none';
+      designationGroup.style.display = 'none';
       
       toggleLink.addEventListener('click', (e) => {
         e.preventDefault();
@@ -182,7 +184,6 @@ function getRedirectUrl($designation) {
         designationGroup.style.display = isLogin ? 'none' : 'block';
       });
 
-      
       authForm.addEventListener('submit', function(e) {
         e.preventDefault();
 
@@ -233,6 +234,19 @@ function getRedirectUrl($designation) {
           });
       });
     });
+
+    function togglePasswordVisibility() {
+      const passwordInput = document.getElementById('password');
+      const toggleIcon = document.querySelector('.toggle-password');
+      
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggleIcon.textContent = '👁️';
+      } else {
+        passwordInput.type = 'password';
+        toggleIcon.textContent = '👁️';
+      }
+    }
   </script>
 </body>
 </html>

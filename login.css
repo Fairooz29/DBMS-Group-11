@@ -38,6 +38,19 @@
       animation: fadeIn 1s ease-in;
     }
 
+    .password-container {
+      position: relative;
+  }
+  
+  .toggle-password {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #666;
+  }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
