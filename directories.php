@@ -1,15 +1,18 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST' || $_SERVER['REQUEST_METHOD'] === 'PUT' || $_SERVER['REQUEST_METHOD'] === 'DELETE') {
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// Handle API requests
+if (isset($_GET['entity'])) {
     header("Access-Control-Allow-Origin: *");
     header("Content-Type: application/json; charset=UTF-8");
-    header("Access-Control-Allow-Methods: POST, PUT, DELETE");
+    header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
     header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-    
     $servername = "localhost";
     $username = "root";
     $password = "";
-    $dbname = "agritruck";
+    $dbname = "directories";
 
     try {
         $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
@@ -23,70 +26,85 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $_SERVER['REQUEST_METHOD'] === 'PUT
     $entity = $_GET['entity'] ?? '';
     $id = $_GET['id'] ?? '';
 
-    switch ($_SERVER['REQUEST_METHOD']) {
-        case 'POST':
-            if ($entity === 'buyers') {
-                $stmt = $conn->prepare("INSERT INTO buyers (id, name, email) VALUES (:id, :name, :email)");
-                $stmt->execute([
-                    ':id' => $input['id'],
-                    ':name' => $input['name'],
-                    ':email' => $input['email']
-                ]);
-                echo json_encode(["message" => "Buyer added successfully"]);
-            } elseif ($entity === 'sellers') {
-                $stmt = $conn->prepare("INSERT INTO sellers (id, name, thana, zip, city, contact) VALUES (:id, :name, :thana, :zip, :city, :contact)");
-                $stmt->execute([
-                    ':id' => $input['id'],
-                    ':name' => $input['name'],
-                    ':thana' => $input['thana'],
-                    ':zip' => $input['zip'],
-                    ':city' => $input['city'],
-                    ':contact' => $input['contact']
-                ]);
-                echo json_encode(["message" => "Seller added successfully"]);
-            }
-            exit();
-            
-        case 'PUT':
-            if ($entity === 'buyers') {
-                $stmt = $conn->prepare("UPDATE buyers SET id=:id, name=:name, email=:email WHERE id=:original_id");
-                $stmt->execute([
-                    ':id' => $input['id'],
-                    ':name' => $input['name'],
-                    ':email' => $input['email'],
-                    ':original_id' => $id
-                ]);
-                echo json_encode(["message" => "Buyer updated successfully"]);
-            } elseif ($entity === 'sellers') {
-                $stmt = $conn->prepare("UPDATE sellers SET id=:id, name=:name, thana=:thana, zip=:zip, city=:city, contact=:contact WHERE id=:original_id");
-                $stmt->execute([
-                    ':id' => $input['id'],
-                    ':name' => $input['name'],
-                    ':thana' => $input['thana'],
-                    ':zip' => $input['zip'],
-                    ':city' => $input['city'],
-                    ':contact' => $input['contact'],
-                    ':original_id' => $id
-                ]);
-                echo json_encode(["message" => "Seller updated successfully"]);
-            }
-            exit();
-            
-        case 'DELETE':
-            if ($entity === 'buyers') {
-                $stmt = $conn->prepare("DELETE FROM buyers WHERE id=:id");
-                $stmt->execute([':id' => $id]);
-                echo json_encode(["message" => "Buyer deleted successfully"]);
-            } elseif ($entity === 'sellers') {
-                $stmt = $conn->prepare("DELETE FROM sellers WHERE id=:id");
-                $stmt->execute([':id' => $id]);
-                echo json_encode(["message" => "Seller deleted successfully"]);
-            }
-            exit();
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        if ($entity === 'buyers') {
+            $stmt = $conn->prepare("SELECT * FROM buyers");
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            echo json_encode($result);
+        } elseif ($entity === 'sellers') {
+            $stmt = $conn->prepare("SELECT * FROM sellers");
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            echo json_encode($result);
+        }
+        exit();
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' || $_SERVER['REQUEST_METHOD'] === 'PUT' || $_SERVER['REQUEST_METHOD'] === 'DELETE') {
+        switch ($_SERVER['REQUEST_METHOD']) {
+            case 'POST':
+                if ($entity === 'buyers') {
+                    $stmt = $conn->prepare("INSERT INTO buyers (id, name, email) VALUES (:id, :name, :email)");
+                    $stmt->execute([
+                        ':id' => $input['id'],
+                        ':name' => $input['name'],
+                        ':email' => $input['email']
+                    ]);
+                    echo json_encode(["message" => "Buyer added successfully"]);
+                } elseif ($entity === 'sellers') {
+                    $stmt = $conn->prepare("INSERT INTO sellers (id, name, thana, zip, city, contact) VALUES (:id, :name, :thana, :zip, :city, :contact)");
+                    $stmt->execute([
+                        ':id' => $input['id'],
+                        ':name' => $input['name'],
+                        ':thana' => $input['thana'],
+                        ':zip' => $input['zip'],
+                        ':city' => $input['city'],
+                        ':contact' => $input['contact']
+                    ]);
+                    echo json_encode(["message" => "Seller added successfully"]);
+                }
+                exit();
+                
+            case 'PUT':
+                if ($entity === 'buyers') {
+                    $stmt = $conn->prepare("UPDATE buyers SET id=:id, name=:name, email=:email WHERE id=:original_id");
+                    $stmt->execute([
+                        ':id' => $input['id'],
+                        ':name' => $input['name'],
+                        ':email' => $input['email'],
+                        ':original_id' => $id
+                    ]);
+                    echo json_encode(["message" => "Buyer updated successfully"]);
+                } elseif ($entity === 'sellers') {
+                    $stmt = $conn->prepare("UPDATE sellers SET id=:id, name=:name, thana=:thana, zip=:zip, city=:city, contact=:contact WHERE id=:original_id");
+                    $stmt->execute([
+                        ':id' => $input['id'],
+                        ':name' => $input['name'],
+                        ':thana' => $input['thana'],
+                        ':zip' => $input['zip'],
+                        ':city' => $input['city'],
+                        ':contact' => $input['contact'],
+                        ':original_id' => $id
+                    ]);
+                    echo json_encode(["message" => "Seller updated successfully"]);
+                }
+                exit();
+                
+            case 'DELETE':
+                if ($entity === 'buyers') {
+                    $stmt = $conn->prepare("DELETE FROM buyers WHERE id=:id");
+                    $stmt->execute([':id' => $id]);
+                    echo json_encode(["message" => "Buyer deleted successfully"]);
+                } elseif ($entity === 'sellers') {
+                    $stmt = $conn->prepare("DELETE FROM sellers WHERE id=:id");
+                    $stmt->execute([':id' => $id]);
+                    echo json_encode(["message" => "Seller deleted successfully"]);
+                }
+                exit();
+        }
     }
 }
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -94,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $_SERVER['REQUEST_METHOD'] === 'PUT
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Buyer and Seller Directories</title>
-  <link rel="stylesheet" href="directories.css">
+ <link rel="stylesheet" href="directories.css">
 </head>
 <body>
   <div class="sidebar">
@@ -174,9 +192,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $_SERVER['REQUEST_METHOD'] === 'PUT
   </div>
 
   <script>
-    const API_BASE_URL = window.location.href.includes('?') 
-        ? window.location.href.split('?')[0] 
-        : window.location.href;
+    const API_BASE_URL = window.location.href;
 
     async function fetchData(endpoint) {
         try {
@@ -270,7 +286,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $_SERVER['REQUEST_METHOD'] === 'PUT
             document.getElementById('buyerForm').reset();
             await renderBuyers();
         } catch (error) {
-            alert("Error adding buyer");
+            alert("Error adding buyer: " + error.message);
         }
     }
 
@@ -292,7 +308,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $_SERVER['REQUEST_METHOD'] === 'PUT
             document.getElementById('sellerForm').reset();
             await renderSellers();
         } catch (error) {
-            alert("Error adding seller");
+            alert("Error adding seller: " + error.message);
         }
     }
 
@@ -312,7 +328,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $_SERVER['REQUEST_METHOD'] === 'PUT
             await sendData('PUT', 'buyers', { id: newId, name: newName, email: newEmail }, buyerId);
             await renderBuyers();
         } catch (error) {
-            alert("Error updating buyer");
+            alert("Error updating buyer: " + error.message);
         }
     }
 
@@ -323,7 +339,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $_SERVER['REQUEST_METHOD'] === 'PUT
             await sendData('DELETE', 'buyers', {}, buyerId);
             await renderBuyers();
         } catch (error) {
-            alert("Error deleting buyer");
+            alert("Error deleting buyer: " + error.message);
         }
     }
 
@@ -354,7 +370,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $_SERVER['REQUEST_METHOD'] === 'PUT
             }, sellerId);
             await renderSellers();
         } catch (error) {
-            alert("Error updating seller");
+            alert("Error updating seller: " + error.message);
         }
     }
 
@@ -365,7 +381,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $_SERVER['REQUEST_METHOD'] === 'PUT
             await sendData('DELETE', 'sellers', {}, sellerId);
             await renderSellers();
         } catch (error) {
-            alert("Error deleting seller");
+            alert("Error deleting seller: " + error.message);
         }
     }
 
@@ -386,7 +402,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' || $_SERVER['REQUEST_METHOD'] === 'PUT
         });
     }
 
-    
+    // Initialize the page
     document.addEventListener('DOMContentLoaded', () => {
         renderBuyers();
         renderSellers();
